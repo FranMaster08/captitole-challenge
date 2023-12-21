@@ -2,6 +2,7 @@ package com.cotizador.cotizador.service;
 
 import com.cotizador.cotizador.dto.PricesDto;
 import com.cotizador.cotizador.entities.Prices;
+import com.cotizador.cotizador.exception.NoPriceListException;
 import com.cotizador.cotizador.reponses.ApplicationDates;
 import com.cotizador.cotizador.reponses.PricesResponses;
 import com.cotizador.cotizador.repositories.PricesRepository;
@@ -32,6 +33,10 @@ public class PriceService {
 
         Prices prices = pricesRepository.findPriceForProduct(startDate, productId, brandId);
         // ver errores por fechas
+        if (prices == null) {
+            // Lanza una excepción personalizada
+            throw new NoPriceListException("Sin precio de lista");
+        }
 
         return buildResponses(prices, pricesDto);
 

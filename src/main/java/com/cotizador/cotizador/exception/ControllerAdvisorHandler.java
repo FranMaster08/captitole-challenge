@@ -26,7 +26,7 @@ public class ControllerAdvisorHandler {
                 request.getDescription(false),
                 HttpStatus.BAD_REQUEST.getReasonPhrase());
 
-        return new ResponseEntity<ErrorResponse>(message, HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>(message, HttpStatus.BAD_REQUEST);
     }
 
     @ExceptionHandler(HttpClientErrorException.Gone.class)
@@ -39,7 +39,20 @@ public class ControllerAdvisorHandler {
                 request.getDescription(false),
                 HttpStatus.GONE.getReasonPhrase());
 
-        return new ResponseEntity<ErrorResponse>(message, HttpStatus.GONE);
+        return new ResponseEntity<>(message, HttpStatus.GONE);
+    }
+
+    @ExceptionHandler(NoPriceListException.class)  
+    public ResponseEntity<ErrorResponse> handleNoPriceListException(NoPriceListException ex, WebRequest request) {
+
+        ErrorResponse message = new ErrorResponse(
+                HttpStatus.NOT_FOUND.value(), 
+                new Date(),
+                ex.getMessage(),
+                request.getDescription(false),
+                HttpStatus.NOT_FOUND.getReasonPhrase());
+
+        return new ResponseEntity<>(message, HttpStatus.NOT_FOUND);
     }
 
     @ExceptionHandler(HttpServerErrorException.class)
@@ -53,7 +66,6 @@ public class ControllerAdvisorHandler {
                 .path(request.getDescription(false))
                 .error(HttpStatus.INTERNAL_SERVER_ERROR.getReasonPhrase())
                 .build();
-        return new ResponseEntity<ErrorResponse>(message, HttpStatus.INTERNAL_SERVER_ERROR);
+        return new ResponseEntity<>(message, HttpStatus.INTERNAL_SERVER_ERROR);
     }
-
 }
