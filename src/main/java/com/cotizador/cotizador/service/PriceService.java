@@ -11,7 +11,6 @@ import java.util.List;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-
 @Service
 public class PriceService {
     private final PricesRepository pricesRepository;
@@ -26,25 +25,31 @@ public class PriceService {
     }
 
     public PricesResponses getLatestPrice(
-          PricesDto pricesDto
-    ) {
+            PricesDto pricesDto) {
         String startDate = pricesDto.getApplicationDate().toString();
         String productId = pricesDto.getProductId();
         long brandId = pricesDto.getBrandId();
 
         Prices prices = pricesRepository.findPriceForProduct(startDate, productId, brandId);
-        PricesResponses responses = new PricesResponses();
-        responses.setPriceList(prices.getPriceListId());
-        responses.setFinalPrice(prices.getPrice());
-        ApplicationDates applicationDates = new ApplicationDates();
-        applicationDates.setEndsDate( prices.getEndDate().toLocalDateTime());
-        applicationDates.setStartDate(prices.getStartDate().toLocalDateTime());
-        responses.setApplicationDates(applicationDates);
-        responses.setBrandId(prices.getBrand().getId());
-        responses.setProductId(prices.getProduct().getId());
-        responses.setCurrency(prices.getCurr());
-        responses.setApplicationDate(pricesDto.getApplicationDate());
-        // Procesa la lista de resultados como sea necesario
+        // ver errores por fechas
+
+        return buildResponses(prices, pricesDto);
+
+    }
+
+    private PricesResponses buildResponses(Prices prices, PricesDto pricesDto) {
+        PricesResponses responses = PricesResponses.builder()
+                .priceList(prices.getPriceListId())
+                .finalPrice(prices.getPrice())
+                .applicationDates(ApplicationDates.builder()
+                        .endsDate(prices.getEndDate().toLocalDateTime())
+                        .startDate(prices.getStartDate().toLocalDateTime())
+                        .build())
+                .brandId(prices.getBrand().getId())
+                .productId(prices.getProduct().getId())
+                .currency(prices.getCurr())
+                .applicationDate(pricesDto.getApplicationDate())
+                .build();
         return responses;
     }
 
