@@ -1,4 +1,5 @@
 package com.cotizador.cotizador.entities;
+
 import jakarta.persistence.*;
 import lombok.Data;
 

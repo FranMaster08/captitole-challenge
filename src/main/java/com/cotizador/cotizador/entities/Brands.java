@@ -1,10 +1,7 @@
 package com.cotizador.cotizador.entities;
+
 import lombok.Data;
-
 import jakarta.persistence.*;
-
-
-
 
 @Data
 @Entity
