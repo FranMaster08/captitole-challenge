@@ -1,28 +1,52 @@
 package com.cotizador.cotizador.exception;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+
+import io.micrometer.common.util.StringUtils;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.HttpServerErrorException;
 import org.springframework.web.context.request.WebRequest;
 
+import java.time.format.DateTimeParseException;
 import java.util.Date;
 
 @RestControllerAdvice
 public class ControllerAdvisorHandler {
 
-    @ExceptionHandler({ HttpMessageNotReadableException.class, MethodArgumentNotValidException.class })
-    public ResponseEntity<ErrorResponse> handleBadRequestException(Exception ex, WebRequest request) {
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    public ResponseEntity<ErrorResponse> handleValidationException(MethodArgumentNotValidException ex,
+                                                                   WebRequest request) {
 
         ErrorResponse message = new ErrorResponse(
                 HttpStatus.BAD_REQUEST.value(),
                 new Date(),
-                ex.getMessage(),
+                "Validation Error",
+                ex.getBindingResult().getFieldError().getDefaultMessage(),
+                HttpStatus.BAD_REQUEST.getReasonPhrase());
+
+        return new ResponseEntity<>(message, HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler({HttpMessageNotReadableException.class})
+    public ResponseEntity<ErrorResponse> handleBadRequestException(HttpMessageNotReadableException ex,
+                                                                   WebRequest request) {
+                                                                    
+        String errorMessage =  ex.getMessage();
+        if(ex.getMessage().matches(".*DateTimeParseException.*")){
+            errorMessage = "Invalid Aplication Date";
+        }
+        ErrorResponse message = new ErrorResponse(
+                HttpStatus.BAD_REQUEST.value(),
+                new Date(),
+                errorMessage,
                 request.getDescription(false),
                 HttpStatus.BAD_REQUEST.getReasonPhrase());
 
@@ -42,11 +66,11 @@ public class ControllerAdvisorHandler {
         return new ResponseEntity<>(message, HttpStatus.GONE);
     }
 
-    @ExceptionHandler(NoPriceListException.class)  
+    @ExceptionHandler(NoPriceListException.class)
     public ResponseEntity<ErrorResponse> handleNoPriceListException(NoPriceListException ex, WebRequest request) {
 
         ErrorResponse message = new ErrorResponse(
-                HttpStatus.NOT_FOUND.value(), 
+                HttpStatus.NOT_FOUND.value(),
                 new Date(),
                 ex.getMessage(),
                 request.getDescription(false),
@@ -57,7 +81,7 @@ public class ControllerAdvisorHandler {
 
     @ExceptionHandler(HttpServerErrorException.class)
     public ResponseEntity<ErrorResponse> handleHttpServerErrorException(HttpServerErrorException exception,
-            WebRequest request) throws JsonProcessingException {
+                                                                       WebRequest request) throws JsonProcessingException {
 
         ErrorResponse message = ErrorResponse.builder()
                 .message(HttpStatus.INTERNAL_SERVER_ERROR.getReasonPhrase())
