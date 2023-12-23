@@ -29,13 +29,12 @@ public class PriceService {
             PricesDto pricesDto) {
         String startDate = pricesDto.getApplicationDate().toString();
         String productId = pricesDto.getProductId();
-        long brandId = pricesDto.getBrandId();
-
+        long brandId = Long.parseLong(pricesDto.getBrandId());
         Prices prices = pricesRepository.findPriceForProduct(startDate, productId, brandId);
-        // ver errores por fechas
         if (prices == null) {
-            // Lanza una excepción personalizada
-            throw new NoPriceListException("Sin precio de lista");
+            throw new NoPriceListException(
+                    String.format("No price list found for Product '%s', Brand '%d', and Date '%s'", productId, brandId,
+                            startDate));
         }
 
         return buildResponses(prices, pricesDto);

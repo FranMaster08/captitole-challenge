@@ -23,24 +23,23 @@ public class ControllerAdvisorHandler {
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<ErrorResponse> handleValidationException(MethodArgumentNotValidException ex,
-                                                                   WebRequest request) {
+            WebRequest request) {
 
         ErrorResponse message = new ErrorResponse(
                 HttpStatus.BAD_REQUEST.value(),
                 new Date(),
-                "Validation Error",
                 ex.getBindingResult().getFieldError().getDefaultMessage(),
+                request.getDescription(false),
                 HttpStatus.BAD_REQUEST.getReasonPhrase());
 
         return new ResponseEntity<>(message, HttpStatus.BAD_REQUEST);
     }
 
-    @ExceptionHandler({HttpMessageNotReadableException.class})
+    @ExceptionHandler({ HttpMessageNotReadableException.class })
     public ResponseEntity<ErrorResponse> handleBadRequestException(HttpMessageNotReadableException ex,
-                                                                   WebRequest request) {
-                                                                    
-        String errorMessage =  ex.getMessage();
-        if(ex.getMessage().matches(".*DateTimeParseException.*")){
+            WebRequest request) {
+        String errorMessage = ex.getMessage();
+        if (ex.getMessage().matches(".*DateTimeParseException.*")) {
             errorMessage = "Invalid Aplication Date";
         }
         ErrorResponse message = new ErrorResponse(
@@ -81,7 +80,7 @@ public class ControllerAdvisorHandler {
 
     @ExceptionHandler(HttpServerErrorException.class)
     public ResponseEntity<ErrorResponse> handleHttpServerErrorException(HttpServerErrorException exception,
-                                                                       WebRequest request) throws JsonProcessingException {
+            WebRequest request) throws JsonProcessingException {
 
         ErrorResponse message = ErrorResponse.builder()
                 .message(HttpStatus.INTERNAL_SERVER_ERROR.getReasonPhrase())

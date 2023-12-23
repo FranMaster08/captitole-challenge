@@ -3,6 +3,7 @@ package com.cotizador.cotizador.controller;
 import java.util.List;
 
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -14,8 +15,11 @@ import com.cotizador.cotizador.entities.Prices;
 import com.cotizador.cotizador.reponses.PricesResponses;
 import com.cotizador.cotizador.service.PriceService;
 
+import jakarta.validation.Valid;
+
 @RestController
 @RequestMapping("/prices")
+@Validated
 public class PriceController {
     private final PriceService priceService;
 
@@ -35,7 +39,7 @@ public class PriceController {
 
     @PostMapping("/getLatestPrice")
     public PricesResponses getLatestPrice(
-            @RequestBody PricesDto pricesDto) {
+           @Valid @RequestBody PricesDto pricesDto) {
         return priceService.getLatestPrice(pricesDto);
 
     }
