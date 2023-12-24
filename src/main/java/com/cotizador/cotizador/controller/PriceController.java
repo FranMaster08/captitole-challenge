@@ -2,6 +2,7 @@ package com.cotizador.cotizador.controller;
 
 import java.util.List;
 
+import com.cotizador.cotizador.interfaces.PriceService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -13,7 +14,6 @@ import org.springframework.web.bind.annotation.RestController;
 import com.cotizador.cotizador.dto.PricesDto;
 import com.cotizador.cotizador.entities.Prices;
 import com.cotizador.cotizador.reponses.PricesResponses;
-import com.cotizador.cotizador.service.PriceService;
 
 import jakarta.validation.Valid;
 

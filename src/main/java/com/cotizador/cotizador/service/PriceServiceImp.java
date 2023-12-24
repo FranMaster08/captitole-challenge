@@ -3,6 +3,7 @@ package com.cotizador.cotizador.service;
 import com.cotizador.cotizador.dto.PricesDto;
 import com.cotizador.cotizador.entities.Prices;
 import com.cotizador.cotizador.exception.NoPriceListException;
+import com.cotizador.cotizador.interfaces.PriceService;
 import com.cotizador.cotizador.reponses.ApplicationDates;
 import com.cotizador.cotizador.reponses.PricesResponses;
 import com.cotizador.cotizador.repositories.PricesRepository;
@@ -13,10 +14,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 @Service
-public class PriceService {
+public class PriceServiceImp implements PriceService {
     private final PricesRepository pricesRepository;
 
-    public PriceService(PricesRepository priceRepository) {
+    public PriceServiceImp(PricesRepository priceRepository) {
         this.pricesRepository = priceRepository;
     }
 

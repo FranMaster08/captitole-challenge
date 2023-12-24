@@ -23,7 +23,7 @@ class PriceServiceTest {
     private PricesRepository pricesRepository;
 
     @InjectMocks
-    private PriceService priceService;
+    private PriceServiceImp priceService;
 
     private   Prices[] pricesArray ;
 
