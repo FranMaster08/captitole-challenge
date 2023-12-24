@@ -1,7 +1,8 @@
 package com.cotizador.cotizador.service;
 
-import com.cotizador.cotizador.entities.Prices;
-import com.cotizador.cotizador.repositories.PricesRepository;
+import com.cotizador.cotizador.domain.entities.Prices;
+import com.cotizador.cotizador.infrastructure.repositories.PricesRepository;
+import com.cotizador.cotizador.infrastructure.service.PriceServiceImp;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

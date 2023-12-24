@@ -1,9 +1,9 @@
-package com.cotizador.cotizador.controller;
+package com.cotizador.cotizador.infrastructure.controller;
 
 import com.cotizador.cotizador.dto.PricesDto;
 
-import com.cotizador.cotizador.reponses.ApplicationDates;
-import com.cotizador.cotizador.reponses.PricesResponses;
+import com.cotizador.cotizador.domain.reponses.ApplicationDates;
+import com.cotizador.cotizador.domain.reponses.PricesResponses;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
@@ -24,7 +24,7 @@ import java.time.LocalDateTime;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-@SpringBootTest
+@SpringBootTest(classes =PriceController.class )
 @WebAppConfiguration
 class PriceControllerTest {
 

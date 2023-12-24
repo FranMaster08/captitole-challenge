@@ -1,12 +1,12 @@
-package com.cotizador.cotizador.service;
+package com.cotizador.cotizador.infrastructure.service;
 
 import com.cotizador.cotizador.dto.PricesDto;
-import com.cotizador.cotizador.entities.Prices;
-import com.cotizador.cotizador.exception.NoPriceListException;
-import com.cotizador.cotizador.interfaces.PriceService;
-import com.cotizador.cotizador.reponses.ApplicationDates;
-import com.cotizador.cotizador.reponses.PricesResponses;
-import com.cotizador.cotizador.repositories.PricesRepository;
+import com.cotizador.cotizador.domain.entities.Prices;
+import com.cotizador.cotizador.domain.exception.NoPriceListException;
+import com.cotizador.cotizador.domain.interfaces.PriceService;
+import com.cotizador.cotizador.domain.reponses.ApplicationDates;
+import com.cotizador.cotizador.domain.reponses.PricesResponses;
+import com.cotizador.cotizador.infrastructure.repositories.PricesRepository;
 
 import java.util.List;
 

@@ -1,16 +1,12 @@
-package com.cotizador.cotizador.reponses;
+package com.cotizador.cotizador.domain.reponses;
 import lombok.Builder;
 import lombok.Data;
 
 import java.time.LocalDateTime;
 
-import lombok.Builder;
-import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.AllArgsConstructor;
 import lombok.AccessLevel;
-
-import java.time.LocalDateTime;
 
 @Builder
 @Data
