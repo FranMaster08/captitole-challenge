@@ -1,5 +1,6 @@
 package com.cotizador.cotizador.dto;
 
+import lombok.Builder;
 import lombok.Data;
 
 import java.time.LocalDateTime;
@@ -9,6 +10,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 import jakarta.validation.constraints.*;
 
 
+@Builder
 @Data
 public class PricesDto {
     @NotNull(message = "The application date cannot be null")
