@@ -1,4 +1,4 @@
-package com.cotizador.cotizador.application;
+package com.cotizador.cotizador;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
