@@ -1,17 +1,16 @@
-package com.cotizador.cotizador.controller;
+package com.cotizador.cotizador.infrastructure.controller;
 
+import com.cotizador.cotizador.domain.reponses.ApplicationDates;
+import com.cotizador.cotizador.domain.reponses.PricesResponses;
 import com.cotizador.cotizador.dto.PricesDto;
-
-import com.cotizador.cotizador.reponses.ApplicationDates;
-import com.cotizador.cotizador.reponses.PricesResponses;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+import jdk.jfr.Description;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.context.annotation.Description;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
@@ -39,21 +38,18 @@ class PriceControllerTest {
     }
 
     @Test
-    @Description("Test get all Prices is OK")
-    void getAllPrices() throws Exception {
+    void getPrices() throws Exception {
         MvcResult mockMvcResult = mockMvc.perform(
-                MockMvcRequestBuilders
-                        .get("/prices/get-prices")
+                MockMvcRequestBuilders.get("/prices/get-prices")
                         .accept(MediaType.APPLICATION_JSON)
         ).andReturn();
 
         assertEquals(200, mockMvcResult.getResponse().getStatus());
     }
 
-
     @Test
     @Description("Test getLatestPrice when june 14, 2020 at 10:00:00")
-    void getLastPrices1() throws Exception {
+    void getLastPriceJune14202010am() throws Exception {
         PricesDto pricesDto = PricesDto.builder()
                 .applicationDate(LocalDateTime.parse("2020-06-14T10:00:00"))
                 .productId("35455")
@@ -74,12 +70,12 @@ class PriceControllerTest {
                                 .build()
                 )
                 .build();
-        assertEquals(response , expectedResponse);
+        assertEquals(response, expectedResponse);
     }
 
     @Test
     @Description("Test getLatestPrice when june 14, 2020 at 16:00:00")
-    void getLastPrices2() throws Exception {
+    void getLastPriceJune1420204pm() throws Exception {
         PricesDto pricesDto = PricesDto.builder()
                 .applicationDate(LocalDateTime.parse("2020-06-14T16:00:00"))
                 .productId("35455")
@@ -100,12 +96,12 @@ class PriceControllerTest {
                                 .build()
                 )
                 .build();
-        assertEquals(response , expectedResponse);
+        assertEquals(response, expectedResponse);
     }
 
     @Test
     @Description("Test getLatestPrice when june 14, 2020 at 21:00:00")
-    void getLastPrices3() throws Exception {
+    void getLastPriceJune1420209pm() throws Exception {
         PricesDto pricesDto = PricesDto.builder()
                 .applicationDate(LocalDateTime.parse("2020-06-14T21:00:00"))
                 .productId("35455")
@@ -126,12 +122,12 @@ class PriceControllerTest {
                                 .build()
                 )
                 .build();
-        assertEquals(response , expectedResponse);
+        assertEquals(response, expectedResponse);
     }
 
     @Test
     @Description("Test getLatestPrice when june 15, 2020 at 10:00:00")
-    void getLastPrices4() throws Exception {
+    void getLastPriceJune15202010am() throws Exception {
         PricesDto pricesDto = PricesDto.builder()
                 .applicationDate(LocalDateTime.parse("2020-06-15T10:00:00"))
                 .productId("35455")
@@ -152,12 +148,12 @@ class PriceControllerTest {
                                 .build()
                 )
                 .build();
-        assertEquals(response , expectedResponse);
+        assertEquals(response, expectedResponse);
     }
 
     @Test
     @Description("Test getLatestPrice when june 16, 2020 at 21:00:00")
-    void getLastPrices5() throws Exception {
+    void getLastPriceJune1620209pm() throws Exception {
         PricesDto pricesDto = PricesDto.builder()
                 .applicationDate(LocalDateTime.parse("2020-06-16T21:00:00"))
                 .productId("35455")
@@ -178,12 +174,14 @@ class PriceControllerTest {
                                 .build()
                 )
                 .build();
-        assertEquals(response , expectedResponse);
+        assertEquals(response, expectedResponse);
     }
 
     private PricesResponses sendRequest(PricesDto pricesDto) throws Exception {
-        var result =  mockMvc.perform(
+        var result = mockMvc.perform(
                         MockMvcRequestBuilders
+
+
                                 .post("/prices/getLatestPrice")
                                 .accept(MediaType.APPLICATION_JSON)
                                 .contentType(MediaType.APPLICATION_JSON)
@@ -195,7 +193,7 @@ class PriceControllerTest {
         return objectMapper.readValue(jsonResponse, PricesResponses.class);
     }
 
-    private void assertResponseAndStatus(PricesResponses response,  PricesResponses expectedContent) {
+    private void assertResponseAndStatus(PricesResponses response, PricesResponses expectedContent) {
         assertEquals(expectedContent, response);
     }
 
@@ -203,8 +201,6 @@ class PriceControllerTest {
         try {
             ObjectMapper om = new ObjectMapper();
             om.registerModule(new JavaTimeModule());
-
-            // convert object to json
             return om.writeValueAsString(object);
         } catch (JsonProcessingException e) {
             throw new RuntimeException(e);

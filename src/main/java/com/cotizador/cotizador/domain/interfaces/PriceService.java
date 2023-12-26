@@ -1,8 +1,8 @@
-package com.cotizador.cotizador.interfaces;
+package com.cotizador.cotizador.domain.interfaces;
 
 import com.cotizador.cotizador.dto.PricesDto;
-import com.cotizador.cotizador.entities.Prices;
-import com.cotizador.cotizador.reponses.PricesResponses;
+import com.cotizador.cotizador.domain.entities.Prices;
+import com.cotizador.cotizador.domain.reponses.PricesResponses;
 import org.springframework.http.ResponseEntity;
 
 import java.util.List;

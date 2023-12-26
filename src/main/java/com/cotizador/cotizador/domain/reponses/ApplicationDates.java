@@ -1,4 +1,4 @@
-package com.cotizador.cotizador.reponses;
+package com.cotizador.cotizador.domain.reponses;
 
 import lombok.*;
 

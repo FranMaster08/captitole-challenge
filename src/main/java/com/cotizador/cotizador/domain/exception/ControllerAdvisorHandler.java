@@ -1,21 +1,17 @@
-package com.cotizador.cotizador.exception;
+package com.cotizador.cotizador.domain.exception;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-
-import io.micrometer.common.util.StringUtils;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.HttpServerErrorException;
 import org.springframework.web.context.request.WebRequest;
 
-import java.time.format.DateTimeParseException;
 import java.util.Date;
 
 @RestControllerAdvice

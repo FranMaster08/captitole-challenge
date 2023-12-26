@@ -1,4 +1,4 @@
-package com.cotizador.cotizador.exception;
+package com.cotizador.cotizador.domain.exception;
 
 import lombok.*;
 import org.springframework.format.annotation.DateTimeFormat;

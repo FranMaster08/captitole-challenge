@@ -1,6 +1,6 @@
-package com.cotizador.cotizador.repositories;
+package com.cotizador.cotizador.infrastructure.repositories;
 
-import com.cotizador.cotizador.entities.Prices;
+import com.cotizador.cotizador.domain.entities.Prices;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
